@@ -1,0 +1,10 @@
+# dsh-google-aistudio bundle patch — 把 Google AI Studio provider 插件插入 DSH 组合
+#
+# 安装：插件已加入 ~/.dsh/profiles/web/package.json 的 dsh.profile.bundles，
+# 重启 DSH Desktop 后本 patch 会自动插入下面这个插件条目。
+- insert:
+    - id: google-aistudio
+      name: 'dsh-google-aistudio'
+      config:
+        # 其余配置项（端口 / 代理 / 模型 / 账户导入）在「设置 → Google AI Studio」里调整
+        enabled: true
