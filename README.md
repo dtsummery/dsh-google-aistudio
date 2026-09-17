@@ -55,9 +55,11 @@ dsh plugin --profile web add github:dtsummery/dsh-google-aistudio
 
 1. **出口代理**：在设置页填 `http://127.0.0.1:7897` 这类可用的 HTTP 代理；留空则沿用 DSH 进程的 `HTTPS_PROXY` / `HTTP_PROXY`。
 2. **下载内核**：点「下载 / 更新内核」，插件会从上游 Release 拉取对应平台的包并解压到 `~/.dsh/aistudio/bin/`。
-3. **导入账户**（二选一）：
-   - **从浏览器导入（推荐）**：选一个本机已登录 AI Studio 的浏览器 User Data 目录（Edge / Chrome / Brave…），填上 Google 邮箱，点「导入账户」。这条路径能让内核拿到 DBSC 续签材料，登录态可自动续期。
-   - **从文件导入**：给一个 Playwright `storage-state.json` 路径（文件所在目录名或文件内 `aistudio2api.source.email` 会被当作账户标识）。
+3. **导入账户**（三选一，**推荐第一种**）：
+   - **隔离登录（推荐）**：点「打开登录窗口」，会弹出一个独立的 Camoufox 浏览器窗口，在其中登录 Google 并进入 AI Studio。会话由内核自己的 Camoufox 持有，和生成时的 WAA 页面是同一指纹，**能长期存活**。
+   - **从浏览器导入**：选一个本机已登录 AI Studio 的浏览器 User Data 目录（Chrome / Edge / Brave…），填上 Google 邮箱。这条路径尝试从浏览器里提取 DBSC 续签材料，成功的话可自动续期；但上游的导入实现是按 Chrome 写的，Edge 等派生浏览器不一定识别得到账号。
+   - **从文件导入**：给一个 Playwright `storage-state.json` 路径（文件所在目录名或文件内 `aistudio2api.source.email` 会被当作账户标识）。⚠️ **这条路径只导入一次性 cookie，没有续签材料**：Google 的 DBSC 票据（`__Secure-1PSIDTS`）在浏览器不活动时不会轮转，服务端几小时内就会作废，之后账户会变成「登录态已失效」，需要重新导出。适合临时试用，不适合长期使用。
+
 4. 账户导入成功后内核会自动重启并重新载入；点「启动服务」拉起数据面（开了「自动拉起数据面」就不用管）。
 
 ## 使用
@@ -108,7 +110,7 @@ dsh plugin --profile web add github:dtsummery/dsh-google-aistudio
 | --- | --- |
 | 「尚未下载反代内核」 | 点「下载 / 更新内核」；确认出口代理能访问 GitHub |
 | 内核起不来 | 看 DSH 日志里的 `[dsh-google-aistudio]` 行，以及内核管理页的日志 |
-| 账户行报「登录态已失效」 | 重新导入该账户（浏览器导入可自动续期，文件导入需要重新导出） |
+| 账户行报「登录态已失效」 | 用「隔离登录」重新登录一次；若之前是「从文件导入」，说明 DBSC 票据已作废，那条路径本来就只有几小时寿命 |
 | 生成返回 `service_stopped` | 设置页点「启动服务」 |
 | 生成报 `account_required` | 没有可用账户，导入或重新导入账户 |
 | 内核启动失败且提到 Camoufox | 首次运行需要下载 Camoufox；检查网络与代理 |
