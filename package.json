@@ -1,6 +1,6 @@
 {
   "name": "dsh-google-aistudio",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Google AI Studio（aistudio.google.com）接入 DeepSeek Harness：插件托管 AIStudio2API 反代内核并注册 aistudio-web provider，支持 Nano Banana Pro 出图、Veo 视频、Lyria 音乐与 Gemini 全系文本模型",
   "type": "module",
   "license": "MIT",
