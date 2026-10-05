@@ -33,6 +33,7 @@ Camoufox 无头浏览器 ──► alkalimakersuite-pa.clients6.google.com
 ## 环境要求
 
 - Windows 10+ / macOS / Linux
+- DSH **0.2.x**（设置页走 0.2 的 `Config` / `configForms` 模型；0.1.x 上会因 `@deepseek-ai/dsh-settings` 没有 `installSettingsSection` 而整包加载失败）
 - 能访问 Google 的网络（**必须配出口代理**，直连会超时）
 - 一个已登录的 Google 账号（Pro / Ultra 权益能解锁更多模型）
 - 磁盘约 400 MB（内核约 30 MB + Camoufox 约 300 MB）
